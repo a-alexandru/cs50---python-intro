@@ -8,45 +8,28 @@ def main():
 
 
 def is_valid(s):
-    if length(s):
-        if alpha(s):
-            if digits(s):
-                return True
+    if length(s) and starts_with_letters(s) and no_invalid_chars(s):
+        if has_valid_numbers(s):
+            return True
     return False
 
 
 def length(l):
-    if len(l) < 2 or len(l) > 6:
+    return 2 <= len(l) <= 6
+
+
+def starts_with_letters(l):
+    return l[:2].isalpha()
+
+
+def no_invalid_chars(l):
+    return all(c.isalnum() for c in l)
+
+
+def has_valid_numbers(l):
+    if l[-1] == "0":
         return False
-    else:
-        for i in range(len(l)):
-            if not l[i].isalnum():
-                return False
-        return True
-
-
-def alpha(l):
-    if l[0].isalpha() and l[1].isalpha():
-        return True
-    else:
-        return False
-
-
-def digits(l):
-    found_digit = False
-    for i in range(2, len(l)-1):
-        if l[i].isdigit() and l[i] != "0":
-            found_digit = True
-            for j in range(i+1, len(l)):
-                if l[j].isalpha():
-                    return True
-                else:
-                    return False
-        elif l[i].isdigit() and l[i] == "0":
-            return False
-        else:
-            return True
-    return not found_digit
+    return l[2:].isdigit()
 
 
 # Testing the modified code
